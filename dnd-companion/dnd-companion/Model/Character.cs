@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace dnd_companion.Model
 {
     public class Character
@@ -6,6 +8,8 @@ namespace dnd_companion.Model
         public Character()
         {
             Level = 1;
+            HP = 100;
+            PP = 100;
         }
 
         public string Name  { get; set; }
@@ -34,10 +38,29 @@ namespace dnd_companion.Model
 
         public int MaxHP { get; set; }
 
+        public int PP { get; set; }
+
         public int Initiative { get; set; }
 
         public int Speed { get; set; }
 
         public string HitDice { get; set; }
+
+        public List<Attack> Attacks { get; set; }
+
+        public void Attack(Character character)
+        {
+            var attack = Attacks[0];
+            this.PP = PP - attack.Cost;
+            character.HP = character.HP - attack.Damage;
+        }
+
+        public void ListAttacks()
+        {
+            foreach(var attack in Attacks)
+            {
+                Console.WriteLine($"{attack.Name} | Cost: {attack.Cost} | Dmg: {attack.Damage}");
+            }
+        }
     }
 }
